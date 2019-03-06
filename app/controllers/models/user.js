@@ -38,6 +38,9 @@ var userSchema = new Schema({
   fullAddress: {
       required: true,
       type: String
+  },
+  submittedVotes: {
+      type: [String]
   }
 
 
