@@ -190,7 +190,7 @@ class ElectionController {
         }
     }
 
-    recordVote(req, res){
+    async recordVote(req, res){
         try{
             let vote = {
                 "forConstiuency" : req.body.consistuency
@@ -200,17 +200,17 @@ class ElectionController {
             const electionId = req.body.electionId;
             let user = await GetUserFromToken(req, res);
 
-            //const userId = user._id;
-            //const userIdObject = { '_id': new ObjectID(userId) };
-            // User.findOne(userIdObject, (err, out) => {
-            //     if (out.submittedVotes == null)
-            //         out.submittedVotes = [];
+            const userId = user._id;
+            const userIdObject = { '_id': new ObjectID(userId) };
+            User.findOne(userIdObject, (err, out) => {
+                if (out.submittedVotes == null)
+                    out.submittedVotes = [];
 
-            //     if (!(out.submittedVotes.includes(electionId))) {
-            //         out.submittedVotes.push(electionId);
-            //         User.updateOne(userIdObject, out.toJSON(), (err, res) => {})
-            //     }
-            // });
+                if (!(out.submittedVotes.includes(electionId))) {
+                    out.submittedVotes.push(electionId);
+                    User.updateOne(userIdObject, out.toJSON(), (err, res) => {})
+                }
+            });
 
 
 
