@@ -198,7 +198,7 @@ class ElectionController {
 
 
             const electionId = req.body.electionId;
-            //let user = await GetUserFromToken(req, res);
+            let user = await GetUserFromToken(req, res);
 
             //const userId = user._id;
             //const userIdObject = { '_id': new ObjectID(userId) };
