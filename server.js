@@ -15,12 +15,15 @@ const ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
 //const port = 8000;
 //const ip_address = "";
 
+//Set up to protect the API from invalid requests with the wrong headers
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, x-access-token, x-access-token2, Content-Type, Accept");
     next();
   });
+
+  //Set server up to retreive json data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -31,6 +34,7 @@ mongoose.connect(db.url, {
     // sets the delay between every retry (milliseconds)
     reconnectInterval: 5000         
 });
+//Start connection
 var connection = mongoose.connection;
 connection.on('error', console.error.bind(console, 'connection error:'));
 connection.once('open', function() {

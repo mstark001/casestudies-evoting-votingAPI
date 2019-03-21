@@ -8,7 +8,7 @@ var voteSchema = new Schema({
     }
 })
 
-
+//Subdocumented schema for sotring n candidate, enforcing the schema for consistency
 var candidateSchema = new Schema({
     candidateId: {
         unique: true,
@@ -36,6 +36,7 @@ var candidateSchema = new Schema({
     }
 })
 
+// enforces the schema for consistiency
 var electionSchema = new Schema({
 
   electionName: {

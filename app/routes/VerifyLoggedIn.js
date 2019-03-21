@@ -1,7 +1,7 @@
 var jwt = require('jsonwebtoken');
 var config = require('../../config/enviromentVariables');
 
-
+//Verify the user is succesfully logged in to this server in the middleware
 function verifyToken(req, res, next) {
   var token = req.headers['x-access-token2'];
   if (!token)

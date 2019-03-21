@@ -14,6 +14,7 @@ var config = require('../../config/enviromentVariables');
 
 class ElectionController {
 
+  // Create election from passed in variables
     createElection(req, res){
       try
       {
@@ -41,6 +42,7 @@ class ElectionController {
       }
     }
 
+    //Get election from passed in id
     getElection(req, res){
       try
       {
@@ -61,6 +63,7 @@ class ElectionController {
       }
     }
 
+//Get all the elections
     getElections(req, res){
       try
       {
@@ -79,6 +82,7 @@ class ElectionController {
       }
     }
 
+    //Update the select election with new data
     updateElection(req, res){
       try
       {
@@ -111,6 +115,7 @@ class ElectionController {
       }
     }
 
+    //Delete a given election from the database
     deleteElection(req, res){
       try
       {
@@ -132,6 +137,7 @@ class ElectionController {
     }
 
 
+    //get all the current, unvoted in elections
     getCurrentElections(req, res){
         try{
             Election.find({}, async (err, out) => {
@@ -152,6 +158,11 @@ class ElectionController {
                                 userOut.submittedVotes = [];
 
                             let elections = [];
+                            //This will go through all the elections and filter out by the following
+                            //infomation
+                            // - If end date has passed
+                            // - and if the user has already voted in that election
+              
                             for (let i = 0; i < out.length; i++)
                             {
 
@@ -172,6 +183,7 @@ class ElectionController {
                                     elections.push(out[i]);
                                 }
                             }
+                            //Send all the elections
                             res.send(elections);
                         }
                     });
@@ -190,6 +202,7 @@ class ElectionController {
         }
     }
 
+    //Record a vote as a spoiled vote for when a user spoils their ballot
     async recordVoteSpoil(req, res){
       let vote = {
         "forConstiuency" : req.body.consistuency
@@ -213,6 +226,7 @@ class ElectionController {
       res.send({'SUCCESS':'VOTE PLACED'});
     }
 
+    //Record a vote and the consistuency it was placed for
     async recordVote(req, res){
         try{
             let vote = {
@@ -314,6 +328,8 @@ class ElectionController {
         }
     }
 
+    //Record the user as voted - called seperately for pirvacy concerns and will remove the election
+    //from the user's homepage
     async recordUserAsVoted(req, res){
         try{
             const electionId = req.params.id;
@@ -347,6 +363,8 @@ class ElectionController {
         }
     }
 
+    //Perform the second stage log in to the specific server side system to 
+    //prevent DDOSes
     async login(req, res){
         try
         {

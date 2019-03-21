@@ -5,6 +5,7 @@ const VerifyRedirectToken = require('./VerifyRedirect');
 
 module.exports = function(routes) {
 
+  //Talk to election controller to force seperation of cocerns
   let electionController = new ElectionController();
 
   //Create
